@@ -126,8 +126,7 @@ def create_temporary_table(apps, schema_editor):
         "CREATE TEMPORARY TABLE temp_person_data AS SELECT id, first_name, last_name FROM your_app_name_person"
     )
 
-def reverse_create_temporary_table(apps, schema_editor):
-    schema_editor.execute("DROP TABLE temp_person_data")
+    ...
 
 class Migration(migrations.Migration):
 
@@ -136,7 +135,7 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RunPython(create_temporary_table, reverse_create_temporary_table),
+        migrations.RunPython(create_temporary_table),
     ]
 ```
 
