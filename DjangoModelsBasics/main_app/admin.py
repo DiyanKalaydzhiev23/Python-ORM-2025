@@ -1,17 +1,18 @@
 from django.contrib import admin
+from unfold.admin import ModelAdmin
 from main_app.models import Recipe, UserProfile, Book
 
 
 @admin.register(Recipe)
-class RecipeAdmin(admin.ModelAdmin):
+class RecipeAdmin(ModelAdmin):
     pass
 
 
 @admin.register(UserProfile)
-class UserProfileAdmin(admin.ModelAdmin):
+class UserProfileAdmin(ModelAdmin):
     pass
 
 
 @admin.register(Book)
-class BookAdmin(admin.ModelAdmin):
+class BookAdmin(ModelAdmin):
     pass
