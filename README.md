@@ -198,8 +198,6 @@ class Migration(migrations.Migration):
 
 ---
 
----
-
 ### Data Operations in Django with queries
 
 
@@ -214,7 +212,7 @@ class Migration(migrations.Migration):
 2. Мениджър в Django:
     - Атрибут на ниво клас на модел за взаимодействия с база данни.
     - Отговорен за CRUD
-    - Custom Manager: Подклас models.Model.
+    - Custom Manager: Подклас models.Manager.
        - Защо персонализирани мениджъри:
          - Капсулиране на общи или сложни заявки.
          - Подобрена четимост на кода.
