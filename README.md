@@ -290,9 +290,6 @@ LOGGING = {
 ---
 
 
----
-
-
 ### Working with queries
 
 Working with Queries
