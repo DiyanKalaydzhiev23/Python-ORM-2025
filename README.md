@@ -31,6 +31,10 @@ Get-ChildItem -Path . -Recurse -Force |
 
 ---
 
+- [Working with Queries](https://forms.gle/kieTF55zwmK2eAaM7)
+
+---
+
 
 # Plans
 
