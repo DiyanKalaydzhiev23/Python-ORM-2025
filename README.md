@@ -557,7 +557,7 @@ author_posts = author.post_set.all()
 	    def from_db_value(self, value, expression, connection):
 	        if value is None:
 	            return value
-	        return tuple(map(int, value.split(',')))
+	        return self.to_python(value)
 	
 	    # Convert any Python value to our desired format (tuple)
 	    def to_python(self, value):
