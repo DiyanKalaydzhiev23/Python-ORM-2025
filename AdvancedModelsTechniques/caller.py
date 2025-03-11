@@ -2,18 +2,25 @@ import os
 from decimal import Decimal
 
 import django
+from django.core.exceptions import ValidationError
 
 # Set up Django
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "orm_skeleton.settings")
 django.setup()
 
-from main_app.models import Document
-from django.contrib.postgres.search import SearchVector
-# Create the first 'Document' object with a title and content.
+from main_app.models import Customer
 
-# Perform a full-text search for documents containing the words 'django' and 'web framework'.
-results = Document.objects.filter(search_vector='3frwf')
+customer = Customer(
+    name="Svetlin Nakov1",
+    age=1,
+    email="nakov@example",
+    phone_number="+35912345678",
+    website_url="htsatps://nakov.com/"
+)
 
-# Print the search results.
-for result in results:
-    print(f"Title: {result.title}")
+try:
+    customer.full_clean()
+    customer.save()
+
+except ValidationError as e:
+    print('\n'.join(e.messages))
