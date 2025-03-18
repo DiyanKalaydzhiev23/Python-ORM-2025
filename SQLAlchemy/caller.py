@@ -12,15 +12,19 @@
 9. Tell alembic how to connect to the db - sqlalchemy.url = postgresql+psycopg2://postgres:admin@localhost/sql_alchemy_exercise
 
 """
+import os
 from typing import Type
 
+from dotenv import load_dotenv
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
 from helpers import handle_session
 from models import Recipe, Chef
 
-engine = create_engine("postgresql+psycopg2://postgres:admin@localhost/sql_alchemy_exercise")
+load_dotenv()
+
+engine = create_engine(f"postgresql+psycopg2://{os.getenv('DB_USER')}:{os.getenv('DB_PASS')}@localhost/sql_alchemy_exercise")
 Session = sessionmaker(bind=engine)
 session = Session()
 
@@ -110,3 +114,5 @@ def get_recipes_with_chef() -> str:
         f"Recipe: {recipe_name} made by chef: {chef_name}"
         for recipe_name, chef_name in recipes_with_chef
     )
+
+print(get_recipes_with_chef())
