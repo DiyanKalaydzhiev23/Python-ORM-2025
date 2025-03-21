@@ -1,0 +1,99 @@
+{% extends "common/base.html" %}
+
+{% block content %}
+
+<div>
+    <div class="player">
+          <div class="top">
+            <button class="small">
+              <div class="inner_button">
+                <img style="height: 10px;" src="data:image/svg+xml;base64,
+PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB2ZXJzaW9uPSIxLjEiIGlkPSJMYXllcl8xIiB4PSIwcHgiIHk9IjBweCIgdmlld0JveD0iMCAwIDQ5MiA0OTIiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDQ5MiA0OTI7IiB4bWw6c3BhY2U9InByZXNlcnZlIiB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiI+PGc+PGc+Cgk8Zz4KCQk8cGF0aCBkPSJNNDY0LjM0NCwyMDcuNDE4bDAuNzY4LDAuMTY4SDEzNS44ODhsMTAzLjQ5Ni0xMDMuNzI0YzUuMDY4LTUuMDY0LDcuODQ4LTExLjkyNCw3Ljg0OC0xOS4xMjQgICAgYzAtNy4yLTIuNzgtMTQuMDEyLTcuODQ4LTE5LjA4OEwyMjMuMjgsNDkuNTM4Yy01LjA2NC01LjA2NC0xMS44MTItNy44NjQtMTkuMDA4LTcuODY0Yy03LjIsMC0xMy45NTIsMi43OC0xOS4wMTYsNy44NDQgICAgTDcuODQ0LDIyNi45MTRDMi43NiwyMzEuOTk4LTAuMDIsMjM4Ljc3LDAsMjQ1Ljk3NGMtMC4wMiw3LjI0NCwyLjc2LDE0LjAyLDcuODQ0LDE5LjA5NmwxNzcuNDEyLDE3Ny40MTIgICAgYzUuMDY0LDUuMDYsMTEuODEyLDcuODQ0LDE5LjAxNiw3Ljg0NGM3LjE5NiwwLDEzLjk0NC0yLjc4OCwxOS4wMDgtNy44NDRsMTYuMTA0LTE2LjExMmM1LjA2OC01LjA1Niw3Ljg0OC0xMS44MDgsNy44NDgtMTkuMDA4ICAgIGMwLTcuMTk2LTIuNzgtMTMuNTkyLTcuODQ4LTE4LjY1MkwxMzQuNzIsMjg0LjQwNmgzMjkuOTkyYzE0LjgyOCwwLDI3LjI4OC0xMi43OCwyNy4yODgtMjcuNnYtMjIuNzg4ICAgIEM0OTIsMjE5LjE5OCw0NzkuMTcyLDIwNy40MTgsNDY0LjM0NCwyMDcuNDE4eiIgZGF0YS1vcmlnaW5hbD0iIzAwMDAwMCIgY2xhc3M9ImFjdGl2ZS1wYXRoIiBzdHlsZT0iZmlsbDojODQ4NzhBIiBkYXRhLW9sZF9jb2xvcj0iIzAwMDAwMCI+PC9wYXRoPgoJPC9nPgo8L2c+PC9nPiA8L3N2Zz4=">
+              </div>
+            </button>
+            <p class="indicator">PLAYING NOW</p>
+            <button class="small">
+              <div class="inner_button">
+                <img style="height: 10px;" src="data:image/svg+xml;base64,
+PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGlkPSJMYXllcl8xIiBlbmFibGUtYmFja2dyb3VuZD0ibmV3IDAgMCA1MTIgNTEyIiBoZWlnaHQ9IjUxMiIgdmlld0JveD0iMCAwIDUxMiA1MTIiIHdpZHRoPSI1MTIiPjxnPjxwYXRoIGQ9Im00NjQuODgzIDY0LjI2N2gtNDE3Ljc2NmMtMjUuOTggMC00Ny4xMTcgMjEuMTM2LTQ3LjExNyA0Ny4xNDkgMCAyNS45OCAyMS4xMzcgNDcuMTE3IDQ3LjExNyA0Ny4xMTdoNDE3Ljc2NmMyNS45OCAwIDQ3LjExNy0yMS4xMzcgNDcuMTE3LTQ3LjExNyAwLTI2LjAxMy0yMS4xMzctNDcuMTQ5LTQ3LjExNy00Ny4xNDl6IiBkYXRhLW9yaWdpbmFsPSIjMDAwMDAwIiBjbGFzcz0iYWN0aXZlLXBhdGgiIHN0eWxlPSJmaWxsOiM4NDg3OEEiIGRhdGEtb2xkX2NvbG9yPSIjMDAwMDAwIj48L3BhdGg+PHBhdGggZD0ibTQ2NC44ODMgMjA4Ljg2N2gtNDE3Ljc2NmMtMjUuOTggMC00Ny4xMTcgMjEuMTM2LTQ3LjExNyA0Ny4xNDkgMCAyNS45OCAyMS4xMzcgNDcuMTE3IDQ3LjExNyA0Ny4xMTdoNDE3Ljc2NmMyNS45OCAwIDQ3LjExNy0yMS4xMzcgNDcuMTE3LTQ3LjExNyAwLTI2LjAxMy0yMS4xMzctNDcuMTQ5LTQ3LjExNy00Ny4xNDl6IiBkYXRhLW9yaWdpbmFsPSIjMDAwMDAwIiBjbGFzcz0iYWN0aXZlLXBhdGgiIHN0eWxlPSJmaWxsOiM4NDg3OEEiIGRhdGEtb2xkX2NvbG9yPSIjMDAwMDAwIj48L3BhdGg+PHBhdGggZD0ibTQ2NC44ODMgMzUzLjQ2N2gtNDE3Ljc2NmMtMjUuOTggMC00Ny4xMTcgMjEuMTM3LTQ3LjExNyA0Ny4xNDkgMCAyNS45OCAyMS4xMzcgNDcuMTE3IDQ3LjExNyA0Ny4xMTdoNDE3Ljc2NmMyNS45OCAwIDQ3LjExNy0yMS4xMzcgNDcuMTE3LTQ3LjExNyAwLTI2LjAxMi0yMS4xMzctNDcuMTQ5LTQ3LjExNy00Ny4xNDl6IiBkYXRhLW9yaWdpbmFsPSIjMDAwMDAwIiBjbGFzcz0iYWN0aXZlLXBhdGgiIHN0eWxlPSJmaWxsOiM4NDg3OEEiIGRhdGEtb2xkX2NvbG9yPSIjMDAwMDAwIj48L3BhdGg+PC9nPiA8L3N2Zz4=">
+              </div>
+            </button>
+          </div>
+
+        <div class="center">
+            <!-- Album cover image -->
+            <img class="album" src="{{ song.album.image_url }}">
+        </div>
+
+        <div class="song_details">
+            <!-- Song details -->
+            <div style="margin-top: 7px; font-size: 10px;">{{ song.song_name }}</div>
+        </div>
+
+        <div class="slider">
+            <!-- Your existing slider elements... -->
+        </div>
+
+        <div class="controls">
+            <button class="big">
+              <div class="inner_button_big">
+                <img style="height: 15px; transform: scale(-1);" src="data:image/svg+xml;base64,
+PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB2ZXJzaW9uPSIxLjEiIGlkPSJDYXBhXzEiIHg9IjBweCIgeT0iMHB4IiB2aWV3Qm94PSIwIDAgNDQ4IDQ0OCIgc3R5bGU9ImVuYWJsZS1iYWNrZ3JvdW5kOm5ldyAwIDAgNDQ4IDQ0ODsiIHhtbDpzcGFjZT0icHJlc2VydmUiIHdpZHRoPSI1MTIiIGhlaWdodD0iNTEyIj48Zz48cGF0aCBkPSJNNDM5Ljg0LDIxMC4wNDJsLTI1Ni0xNDRjLTQuOTI4LTIuNzUyLTExLjAwOC0yLjcyLTE1LjkwNCwwLjEyOFMxNjAsNzQuMjk4LDE2MCw3OS45OTR2NjIuNTkyTDIzLjg0LDY2LjA0MiAgYy00Ljk2LTIuNzg0LTExLjAwOC0yLjcyLTE1LjkzNiwwLjEyOEMzLjAwOCw2OS4wNSwwLDc0LjI5OCwwLDc5Ljk5NHYyODhjMCw1LjY5NiwzLjAwOCwxMC45NDQsNy45MDQsMTMuODI0ICBjMi40OTYsMS40NCw1LjMxMiwyLjE3Niw4LjA5NiwyLjE3NmMyLjY4OCwwLDUuNDA4LTAuNjcyLDcuODQtMi4wNDhMMTYwLDMwNS40MDJ2NjIuNTkyYzAsNS42OTYsMy4wNCwxMC45NDQsNy45MzYsMTMuODI0ICBzMTAuOTc2LDIuOTEyLDE1LjkwNCwwLjEyOGwyNTYtMTQ0YzUuMDI0LTIuODQ4LDguMTYtOC4xNiw4LjE2LTEzLjk1MlM0NDQuODY0LDIxMi44OSw0MzkuODQsMjEwLjA0MnoiIGRhdGEtb3JpZ2luYWw9IiMwMDAwMDAiIGNsYXNzPSJhY3RpdmUtcGF0aCIgc3R5bGU9ImZpbGw6Izg0ODc4QSIgZGF0YS1vbGRfY29sb3I9IiMwMDAwMDAiPjwvcGF0aD48L2c+IDwvc3ZnPg==">
+              </div>
+            </button>
+            <button class="big_play_pause" onclick="togglePlayPause()">
+                <div class="playpause playImg">
+                   <img style="height: 15px;" src="data:image/svg+xml;base64,
+PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB2ZXJzaW9uPSIxLjEiIGlkPSJDYXBhXzEiIHg9IjBweCIgeT0iMHB4IiB2aWV3Qm94PSIwIDAgMzIwLjAwMSAzMjAuMDAxIiBzdHlsZT0iZW5hYmxlLWJhY2tncm91bmQ6bmV3IDAgMCAzMjAuMDAxIDMyMC4wMDE7IiB4bWw6c3BhY2U9InByZXNlcnZlIiB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiI+PGc+PHBhdGggZD0iTTI5NS44NCwxNDYuMDQ5bC0yNTYtMTQ0Yy00Ljk2LTIuNzg0LTExLjAwOC0yLjcyLTE1LjkwNCwwLjEyOEMxOS4wMDgsNS4wNTcsMTYsMTAuMzA1LDE2LDE2LjAwMXYyODggIGMwLDUuNjk2LDMuMDA4LDEwLjk0NCw3LjkzNiwxMy44MjRjMi40OTYsMS40NCw1LjI4LDIuMTc2LDguMDY0LDIuMTc2YzIuNjg4LDAsNS40MDgtMC42NzIsNy44NC0yLjA0OGwyNTYtMTQ0ICBjNS4wMjQtMi44NDgsOC4xNi04LjE2LDguMTYtMTMuOTUyUzMwMC44NjQsMTQ4Ljg5NywyOTUuODQsMTQ2LjA0OXoiIGRhdGEtb3JpZ2luYWw9IiMwMDAwMDAiIGNsYXNzPSJhY3RpdmUtcGF0aCIgc3R5bGU9ImZpbGw6I0ZGRkZGRiIgZGF0YS1vbGRfY29sb3I9IiMwMDAwMDAiPjwvcGF0aD48L2c+IDwvc3ZnPg==">
+                </div>
+                <div style="display: none;" class="playpause pauseImg">
+                   <img style="height: 15px;" src="https://www.iconsdb.com/icons/preview/white/pause-xxl.png">
+                </div>
+            </button>
+            <button class="big">
+              <div class="inner_button_big">
+                <img style="height: 15px;" src="data:image/svg+xml;base64,
+PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB2ZXJzaW9uPSIxLjEiIGlkPSJDYXBhXzEiIHg9IjBweCIgeT0iMHB4IiB2aWV3Qm94PSIwIDAgNDQ4IDQ0OCIgc3R5bGU9ImVuYWJsZS1iYWNrZ3JvdW5kOm5ldyAwIDAgNDQ4IDQ0ODsiIHhtbDpzcGFjZT0icHJlc2VydmUiIHdpZHRoPSI1MTIiIGhlaWdodD0iNTEyIj48Zz48cGF0aCBkPSJNNDM5Ljg0LDIxMC4wNDJsLTI1Ni0xNDRjLTQuOTI4LTIuNzUyLTExLjAwOC0yLjcyLTE1LjkwNCwwLjEyOFMxNjAsNzQuMjk4LDE2MCw3OS45OTR2NjIuNTkyTDIzLjg0LDY2LjA0MiAgYy00Ljk2LTIuNzg0LTExLjAwOC0yLjcyLTE1LjkzNiwwLjEyOEMzLjAwOCw2OS4wNSwwLDc0LjI5OCwwLDc5Ljk5NHYyODhjMCw1LjY5NiwzLjAwOCwxMC45NDQsNy45MDQsMTMuODI0ICBjMi40OTYsMS40NCw1LjMxMiwyLjE3Niw4LjA5NiwyLjE3NmMyLjY4OCwwLDUuNDA4LTAuNjcyLDcuODQtMi4wNDhMMTYwLDMwNS40MDJ2NjIuNTkyYzAsNS42OTYsMy4wNCwxMC45NDQsNy45MzYsMTMuODI0ICBzMTAuOTc2LDIuOTEyLDE1LjkwNCwwLjEyOGwyNTYtMTQ0YzUuMDI0LTIuODQ4LDguMTYtOC4xNiw4LjE2LTEzLjk1MlM0NDQuODY0LDIxMi44OSw0MzkuODQsMjEwLjA0MnoiIGRhdGEtb3JpZ2luYWw9IiMwMDAwMDAiIGNsYXNzPSJhY3RpdmUtcGF0aCIgc3R5bGU9ImZpbGw6Izg0ODc4QSIgZGF0YS1vbGRfY29sb3I9IiMwMDAwMDAiPjwvcGF0aD48L2c+IDwvc3ZnPg==">
+              </div>
+            </button>
+          </div>
+
+        </div>
+
+            <!-- Play/Pause button -->
+
+
+            <!-- Other control buttons... -->
+        </div>
+
+        <!-- Hidden audio player -->
+        <audio id="audioPlayer" style="display: none;">
+            <source id="audioSource" src="{% url 'serve-song' album_id=song.album.id song_id=song.id %}" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio>
+    </div>
+</div>
+
+<script type="text/javascript">
+function togglePlayPause() {
+    let audioPlayer = document.getElementById('audioPlayer');
+    let pauseImg = document.querySelector('.pauseImg');
+    let playImg = document.querySelector('.playImg');
+
+    if (audioPlayer.paused || audioPlayer.ended) {
+        audioPlayer.play();
+
+        document.querySelector('.pauseImg img').style.marginTop = '20px';
+        document.querySelector('.playImg img').style.marginTop = '20px';
+
+        document.querySelector('.pauseImg').style.display = 'inline-block';
+        document.querySelector('.playImg').style.display = 'none';
+    } else {
+        audioPlayer.pause();
+        document.querySelector('.pauseImg').style.display = 'none';
+        document.querySelector('.playImg').style.display = 'inline-block';
+    }
+}
+</script>
+
+{% endblock %}

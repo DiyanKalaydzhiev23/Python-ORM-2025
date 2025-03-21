@@ -1,0 +1,24 @@
+{% extends 'common/base.html' %}
+
+{% block content %}
+<!-- Catalog with Albums-->
+<section id="catalogPage">
+    <h1>All albums</h1>
+    {% for album in albums %}
+        <div class="card-box">
+            <img src="{{ album.image_url }}" alt="Cover Image">
+            <div>
+                <div class="text-center">
+                    <p class="name">Name: {{ album.album_name }}</p>
+                    <p class="price">Price: ${{ album.price }}</p>
+                </div>
+                <div class="btn-group">
+                    <a href="{% url 'details-album' album.id %}">Details</a>
+                </div>
+            </div>
+        </div>
+    {% empty %}
+        <p>No Albums in Catalog!</p>
+    {% endfor %}
+</section>
+{% endblock %}

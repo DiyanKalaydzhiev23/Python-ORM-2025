@@ -1,0 +1,98 @@
+.wrapper {
+    height: 400px;
+    width: 1000px;
+    border-radius: 7px 7px 7px 7px;
+    box-shadow: 0 0 1.5px 3px gray;
+    margin: 30px auto 200px;
+}
+
+.albumCover, .profilePage {
+    float: left;
+    height: 100%;
+    width: auto;
+    margin-right: 20px;
+}
+
+.albumCover img, .profilePage img {
+    border-radius: 12px 0 0 7px;
+    height: 100%;
+}
+
+.albumText, .profileText {
+    padding-left: 10px;
+    padding-top: 20px;
+}
+
+.albumText h1, .profileText h1 {
+    color:gainsboro;
+    font-weight: bolder;
+    font-size: 28px;
+}
+
+.albumText h3 {
+    font-size: 18px;
+    color: gray;
+    letter-spacing: 0.2em;
+    margin: 8px 0 0 18px;
+}
+
+.albumText h4 {
+    margin: 8px 0 10px 18px;
+    font-size: 16px;
+    color: #9F9991;
+    letter-spacing: 0.2em;
+}
+
+.albumText h5 {
+    margin: 8px 0 10px 14px;
+    font-size: 16px;
+    color: white;
+}
+
+.albumText > p, .profileText > p {
+    height: auto;
+    width: 100%;
+    color: #9F9991;
+    line-height: 1.6em;
+    font-size: 18px;
+    font-weight: bold;
+    margin-right: 20px;
+}
+
+.actionBtn  {
+    display: flex;
+    text-align: center;
+    left: auto;
+    top: auto;
+    right: 0;
+    bottom: 0;
+}
+
+.actionBtn > a {
+	width: 200%;
+	height: 50px;
+	cursor: pointer;
+	border: none;
+    border-radius: 10px;
+	display: inline;
+	align-items: center;
+	justify-content: center;
+	background-color: #1b2845;
+	background-image: linear-gradient(315deg, #45a29e 0%, #0d324d 74%);
+	background-size: 200% 100%;
+	background-position: left;
+	background-repeat: no-repeat;
+	transition: 500ms;
+    color: white;
+    font-family: "Lato", serif;
+    font-size: 20px;
+    margin-bottom: 10px;
+    margin-top: 20px;
+    padding: 10px;
+    text-decoration: none;
+    margin-right: 50px;
+}
+
+.actionBtn > a:hover {
+	background-position: right;
+}

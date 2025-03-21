@@ -1,0 +1,17 @@
+{% extends 'common/base.html' %}
+
+{% block content %}
+<section class="createPage">
+
+    <form method="POST" action="{% url 'create-song' %}" enctype="multipart/form-data">
+        <fieldset>
+            <legend>Add Album</legend>
+            <div class="container">
+                {% csrf_token %}
+                {{ form }}
+                <button class="add-song" type="submit">Add New Song</button>
+            </div>
+        </fieldset>
+    </form>
+</section>
+{% endblock %}

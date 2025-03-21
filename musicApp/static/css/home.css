@@ -1,0 +1,90 @@
+body {
+    background-image: url('/static/images/back.jpg');
+    background-size: cover;
+}
+
+.container-inline {
+  margin: 1rem;
+  padding: 2rem 2rem;
+
+}
+
+nav,
+footer {
+    background-color: #0B0C10;
+    width: 100%;
+    display: flex;
+    font-size: 16px;
+    justify-content: space-around;
+    align-items: center;
+    padding: 0 5px 0 3px;
+    margin: 0;
+    color: white;
+}
+
+nav a {
+    text-decoration: none;
+    color: #8f8f8f;
+    font-size: 20px;
+    font-weight: bolder;
+    position: relative;
+    margin: 20px;
+}
+
+nav ul {
+    margin: 0 0 0 auto;
+}
+
+nav ul li {
+    display: inline;
+    margin: 0 2px;
+}
+
+li::before {
+    display: inline;
+}
+
+nav a {
+    text-decoration: none;
+    border-radius: 50%;
+    padding: 0.5em;
+    color: white;
+}
+
+footer {
+    position: fixed;
+    width: 100%;
+    left: 0;
+    bottom: 0;
+    padding: 15px;
+    text-align: center;
+    color: #c5c6c7;
+    font-weight: bold;
+}
+
+nav a:hover {
+    cursor: pointer;
+    color: #45a29e;
+    font-weight: bolder;
+}
+
+#welcomePage {
+    float: left;
+    width: 50%;
+    color: #45a29e;
+    font-size: 24px;
+    padding: 30px;
+    margin: 10px;
+
+}
+
+#welcomePage img {
+    width: 80%
+}
+
+nav > img {
+    width: 90px;
+    height: 80px;
+    margin-left: 0.2em;
+    margin-right: 0.2em;
+}

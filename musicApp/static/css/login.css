@@ -1,0 +1,99 @@
+@import url(https://fonts.googleapis.com/css?family=Lato:100,300,400,700);
+
+fieldset {
+    float: left;
+    width: 50%;
+    margin: 1em auto;
+    padding: 2em;
+    border-radius: 2px;
+    border-color: #2d333b;
+    background: #1b1f24;
+    box-shadow: 0 2px 2px #131518;
+
+}
+
+fieldset legend {
+    font-weight: 700;
+    font-size: 2em;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    text-align: center;
+    background: #171a1e;
+    -o-border-image: linear-gradient(180deg, rgba(255, 255, 255, 0) 50%, #2d333b 50%) 1 round;
+    border-width: 1px;
+    border-style: solid;
+    display: block;
+    width: 100%;
+    margin: 0 auto;
+}
+
+input, input + label > i {
+    border-radius: 3px;
+    box-shadow: none;
+    border: 1px solid #384049;
+    background: #15171b;
+    display: block;
+    width: 100%;
+    color: white;
+    transition: all 0.3s ease;
+}
+
+input[type=text], input[type=number], input[type=email] {
+    font-size: 1.2em;
+    line-height: 1;
+    padding: 0.3em 0.4em;
+    margin: 0 0.5em 1em 0;
+}
+
+input[type=text]::-webkit-input-placeholder, input[type=number]::-webkit-input-placeholder, input[type=email]::-webkit-input-placeholder {
+    color: #343b44;
+    line-height: 1.2;
+    -webkit-transition: all 0.2s ease;
+    transition: all 0.2s ease;
+}
+
+input[type=text]:hover, input[type=number]:hover, input[type=email]:hover {
+    border-color: #4e5966;
+}
+
+input[type=text]:focus, input[type=number]:focus, input[type=email]:focus {
+    outline: none;
+    border-color: #39a086;
+}
+
+.register {
+    width: 150px;
+    height: 50px;
+    cursor: pointer;
+    border: none;
+    border-radius: 10px;
+    display: inline;
+    align-items: center;
+    justify-content: center;
+    background-color: #1b2845;
+    background-image: linear-gradient(315deg, #45a29e 0%, #0d324d 74%);
+    background-size: 200% 100%;
+    background-position: left;
+    background-repeat: no-repeat;
+    transition: 500ms;
+    color: white;
+    font-family: "Lato", serif;
+    font-size: 20px;
+    margin-bottom: 5px;
+    margin-top: 20px;
+}
+
+#registerPage {
+    font-family: "Lato", serif;
+    font-size: 16px;
+    color: #aab2bd;
+    padding: 1em 0 10em;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+p {
+    padding-top: 20px;
+}
