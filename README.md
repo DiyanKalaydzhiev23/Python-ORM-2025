@@ -52,7 +52,7 @@ ORM - Object Relational Mapping
    - `migrate`
   
 4. Други команди
-   - `dbshell` - отваря конзола, в коятоо можем да пишем SQL
+   - `dbshell` - отваря конзола, в която можем да пишем SQL
    - `CTRL + ALT + R` - отваря manage.py console
 
 ---
