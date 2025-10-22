@@ -31,6 +31,10 @@ Get-ChildItem -Path . -Recurse -Force |
 
 ---
 
+- [Working with Queries](https://forms.gle/kieTF55zwmK2eAaM7)
+
+---
+
 
 # Plans
 
@@ -195,5 +199,92 @@ class Migration(migrations.Migration):
            'fields': (...),}),
       )
     ```
+
+---
+
+### Data Operations in Django with queries
+
+
+1. CRUD overview
+   - CRUD - Create, Read, Update, Delete
+   - Използваме го при: 
+     - Web Development
+     - Database Management
+   - Дава ни един консистентен начин, за това ние да създаваме фунцкионалност за CRUD
+   - Можем да го правим през ORM-a на Джанго
+
+2. Мениджър в Django:
+    - Атрибут на ниво клас на модел за взаимодействия с база данни.
+    - Отговорен за CRUD
+    - Custom Manager: Подклас models.Manager.
+       - Защо персонализирани мениджъри:
+         - Капсулиране на общи или сложни заявки.
+         - Подобрена четимост на кода.
+         - Избягвайме повторенията и подобряваме повторната употреба.
+         - Промяна наборите от заявки според нуждите.
+
+3. Django Queryset
+   - QuerySet - клас в пайтън, които изпозваме, за да пазим данните от дадена заявка
+   - Данните не се взимат, докато не бъдат потърсени от нас
+   - cars = Cars.objects.all() # <QuerySet []>
+   - print(cars)  # <QuerySet [Car object(1)]>
+
+   - QuerySet Features: 
+     - Lazy Evaluation - примера с колите, заявката не се вика, докато данните не потрябват
+     - Retrieving objects - можем да вземаме всички обекти или по даден критерии
+     - Chaining filters - MyModel.objects.filter(category='electronics').filter(price__lt=1000)
+     - query related objects - позволява ни да търсим в таблици, с които имаме релации, през модела: # Query related objects using double underscores
+related_objects = Order.objects.filter(customer__age__gte=18)
+     - Ordering - ordered_objects = Product.objects.order_by('-price')
+     - Pagination 
+      ```python
+       from django.core.paginator import Paginator
+
+        # Paginate queryset with 10 objects per page
+        paginator = Paginator(queryset, per_page=10)
+        page_number = 2
+        print([x for x in paginator.get_page(2)])
+      ```
+
+4. Django Simple Queries
+   - Object Manager - default Objects
+   - Methods:
+     - `all()`
+     - `first()`
+     - `get(**kwargs)`
+     - `create(**kwargs)`
+     - `filter(**kwargs)`
+     - `order_by(*fields)`
+     - `delete()`
+
+5. Django Shell and SQL Logging
+   - Django Shell
+     - Дава ни достъп до целия проект
+     - python manage.py shell
+   - SQL logging
+     -  Enable SQL logging
+
+```python
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'root': {
+        'handlers': ['console'],
+        'level': 'DEBUG',  # Other levels CRITICAL, ERROR, WARNING, INFO, DEBUG
+    },
+    'loggers': {
+        'django.db.backends': {  # responsible for the sql logs
+            'handlers': ['console'],
+            'level': 'DEBUG',
+            'propagate': False,
+        },
+    },
+}
+```
 
 ---
