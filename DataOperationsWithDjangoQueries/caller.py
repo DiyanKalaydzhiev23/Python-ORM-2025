@@ -303,4 +303,7 @@ def grand_strength() -> None:
 
 
 def delete_characters() -> None:
+    """
+    DELETE FROM main_app_character WHERE inventory = 'The inventory is empty';
+    """
     Character.objects.filter(inventory='The inventory is empty').delete()
