@@ -31,6 +31,10 @@ Get-ChildItem -Path . -Recurse -Force |
 
 ---
 
+- [Data Operations with Django Queries](https://forms.gle/Pzay1RHaUuQCb1X68)
+
+---
+
 - [Working with Queries](https://forms.gle/kieTF55zwmK2eAaM7)
 
 ---
@@ -286,5 +290,40 @@ LOGGING = {
     },
 }
 ```
+
+---
+
+
+### Working with queries
+
+Working with Queries
+
+
+1. Useful Methods
+   - filter() - връща subset от обекти; приема kwargs; връща queryset;
+   - exclude() - връща subset от обекти; приема kwargs; връща queryset;
+   - order_by() - връща сортираните обекти; - за desc;
+   - count() - като len, но по-бързо; count връща само бройката без да му трябвата реалните обекти;
+   - get() - взима един обект по даден критерии;
+
+
+2. Chaning methods
+   - всеки метод работи с върнатия от предишния резултат
+
+
+3. Lookup keys
+   - Използват се във filter, exclude, get;
+   - __exact __iexact - матчва точно;
+   - __contains __icontains - проверява дали съдържа;
+   - __startswith __endswith
+   - __gt __gte
+   - __lt __lte
+   - __range=(2, 5) - both inclusive
+
+4. Bulk methods
+   - използват се за да извършим операции върху много обекти едновременно
+   - bulk_create - създава множество обекти навъеднъж;
+   - filter().update()
+   - filter().delete()
 
 ---
