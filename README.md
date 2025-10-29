@@ -39,6 +39,10 @@ Get-ChildItem -Path . -Recurse -Force |
 
 ---
 
+- [Django Relations](https://forms.gle/6uvQdwzqfxt87kD36)
+
+---
+
 
 # Plans
 
@@ -325,5 +329,131 @@ Working with Queries
    - bulk_create - създава множество обекти навъеднъж;
    - filter().update()
    - filter().delete()
+
+---
+
+###  Django Relations
+
+Django Models Relations
+
+
+1. Database Normalization
+   - Efficient Database Organization
+     - Data normalization - разбива големи таблици на по-малки такива, правейки данните по-организирани
+     - Пример: Все едно имаме онлайн магазин и вместо да пазим име, адрес и поръчка в една таблица, можем да разбием на 3 таблици и така да не повтаряме записи
+   
+    - Guidelines and Rules
+      - First Normal Form
+      	- First Normal Form (1NF): елеминираме повтарящите се записи, всяка таблица пази уникални стойности
+
+        - Second Normal Form (2NF): извършваме първото като го правим зависимо на PK
+          - Пример: Онлайн магазин с данни и покупки Customers и Orders са свързани с PK, вместо всичко да е в една таблица
+
+	- Third Normal Form (3NF):
+	  - Премахване на преходни зависимости (транзитивни зависимости), при които една неключова колона зависи от друга неключова колона, а не директно от първичния ключ.
+	  - Ако таблица съдържа данни като ID на служител, име на служител, град и адрес, но адресът зависи от града, а не директно от служителя, тогава съществува транзитивна зависимост.
+	  - За да изпълним 3NF, разделяме информацията в три таблици – служители, градове и адреси.
+	  - Връзките между тях не е задължително да са по първичен ключ (PK), а могат да бъдат по city_id, така че служителят да не бъде зависим от конкретния адрес, а само от града, в който работи.
+        
+	- Boyce-Codd Normal Form (BCNF):
+          - По-строга версия на 3NF
+          - Тук правим да се навързват по PK
+
+	- Fourth Normal Form (4NF):
+	  - Една таблица е в 4NF, ако е в Трета Нормална Форма (3NF) и няма многозначни зависимости (multivalued dependencies - MVDs).
+	  - Многозначна зависимост възниква, когато един ключ (например "Курс") е свързан с множество стойности на два или повече независими набора от данни.
+     	  - Например, ако имаме таблица с колони, "Курс", "Лектор", "Книга", можем да я разделим на две таблици. Курс - Лектор, Курс - Книга.
+	    	```
+	        Курс	Книга	Преподавател
+			X	A	Иванов
+			X	B	Иванов
+			Y	A	Петров
+			Y	C	Петров
+	     	```
+        - Трябва да се раздели на 2 таблици
+        - Курс - Книга
+          ```
+			Курс	Книга
+			X	A
+			X	B
+			Y	A
+			Y	C
+          ```
+        - Курс - Преподавател
+		  ```
+			Курс	Преподавател
+			X	Иванов
+			Y	Петров
+	 	  ```
+	- Fifth Normal Form (5NF) - Project-Join Normal Form or PJ/NF:
+	  - Кратко казано да не ни се налага да минаваме през таблици с данни, които не ни трябват, за да достигнем до таблица с данни, която ни трябва
+
+   - Database Schema Design
+      - Създаването на различни ключове и връзки между таблиците
+
+   - Minimizing Data Redundancy
+     - Чрез разбиването на таблици бихме имали отново намалено повтаряне на информация
+     - Имаме книга и копия, копията са в отделна таблица, и са линкнати към оригинала
+   
+   - Ensuring Data Integrity & Eliminating Data Anomalies
+     - Това ни помага да update-ваме и изтриваме данните навсякъде еднакво
+     - отново благодарение на някакви constraints можем да променим една стойност в една таблица и тя да се отрази във всички
+
+   - Efficiency and Maintainability
+     - Благодарение на по-малките таблици, ги query–ваме и update-ваме по-бързо
+
+1. Релации в Django Модели
+   - Получават се използвайки ForeignKey полета
+   - related_name - можем да направим обартна връзка
+     - По дефолт тя е името + _set
+  
+   - Пример:
+   ```py
+   class Author(models.Model):
+       name = models.CharField(max_length=100)
+   
+   class Post(models.Model):
+       title = models.CharField(max_length=200)
+       content = models.TextField()
+       author = models.ForeignKey(Author, on_delete=models.CASCADE)
+   ```
+
+- Access all posts written by an author
+```py
+author = Author.objects.get(id=1)
+author_posts = author.post_set.all()
+```
+
+3. Types of relationships
+   - Many-To-One (One-To-Many)
+   - Many-To-Many 
+     - Няма значение, в кой модел се слага
+     - Django автоматично създава join таблица или още наричана junction
+     - Но, ако искаме и ние можем да си създадем: 
+      ```py
+      class Author(models.Model):
+          name = models.CharField(max_length=100)
+      
+      class Book(models.Model):
+          title = models.CharField(max_length=200)
+          authors = models.ManyToManyField(Author, through='AuthorBook')
+      
+      class AuthorBook(models.Model):
+          author = models.ForeignKey(Author, on_delete=models.CASCADE)
+          book = models.ForeignKey(Book, on_delete=models.CASCADE)
+          publication_date = models.DateField()
+      ```
+
+   - OneToOne, предимно се слага на PK
+   - Self-referential Foreign Key
+      - Пример имаме работници и те могат да са мениджъри на други работници
+        
+   ```py
+   class Employee(models.Model):
+       name = models.CharField(max_length=100)
+       supervisor = models.ForeignKey('self', on_delete=models.CASCADE, null=True, blank=True)
+   ```
+
+    - Lazy Relationships - обекта от релацията се взима, чрез заявка, чак когато бъде повикан
 
 ---
