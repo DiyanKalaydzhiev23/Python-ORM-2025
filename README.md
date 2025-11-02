@@ -43,6 +43,10 @@ Get-ChildItem -Path . -Recurse -Force |
 
 ---
 
+- [Models Inheritance](https://forms.gle/jgC7Mk67gmaaNGvd7)
+
+---
+
 
 # Plans
 
@@ -475,3 +479,117 @@ author_posts = author.post_set.all()
     - Lazy Relationships - обекта от релацията се взима, чрез заявка, чак когато бъде повикан
 
 ---
+
+
+### Models Inheritance and Customization
+
+1. Типове наследяване
+   - Multi-table
+     - Разширяваме модел с полетата от друг модел, като не копираме самите полета, а използваме създадения от django pointer, който прави One-To-One Relationship
+     - Пример: 
+
+	```py
+	class Person(models.Model):
+	    name = models.CharField(max_length=100)
+	    date_of_birth = models.DateField()
+	    
+	    def is_student(self):
+	        """Check if this person is also a student."""
+	        return hasattr(self, 'student')
+	
+	class Student(Person):
+	    student_id = models.CharField(max_length=15)
+	    major = models.CharField(max_length=50)
+	```	
+
+
+   - Abstract Base Classes
+     - При това наследяване не се създават две нови таблици, а само една и тя е на наследяващия клас(Child), като абстрактния клас(Parent) е само шаблон
+     - Постигаме го чрез промяна на Meta класа:
+       ```py
+       class AbstractBaseModel(models.Model):
+           common_field1 = models.CharField(max_length=100)
+           common_field2 = models.DateField()
+    
+           def common_method(self):
+               return "This is a common method"
+    
+           class Meta:
+               abstract = True
+       ```
+
+   - Proxy Models
+     - Използваме ги, за да добавим функционалност към модел, който не можем да достъпим
+     - Можем да добавяме методи, но не и нови полета
+     - Пример:
+
+	```py
+	class Article(models.Model):
+	    title = models.CharField(max_length=200)
+	    content = models.TextField()
+	    published_date = models.DateField()
+	
+	class RecentArticle(Article):
+	    class Meta:
+	        proxy = True
+	
+	    def is_new(self):
+	        return self.published_date >= date.today() - timedelta(days=7)
+	    
+	    @classmethod
+	    def get_recent_articles(cls):
+	        return cls.objects.filter(published_date__gte=date.today() - timedelta(days=7))
+	```
+
+2. Основни Built-In Методи
+   - `save()` - използва се за запазване на записи
+	```py
+	    def save(self, *args, **kwargs):
+	        # Check the price and set the is_discounted field
+	        if self.price < 5:
+	            self.is_discounted = True
+	        else:
+	            self.is_discounted = False
+	
+	        # Call the "real" save() method
+	        super().save(*args, **kwargs)
+	```
+   - `clean()` - използва се, когато искаме да валидираме логически няколко полета, например имаме тениска в 3 цвята, но ако е избран XXL цветовете са само 2.
+ 
+
+3. Custom Model Properties
+   - Както и в ООП, можем чрез @property декоратора да правим нови атрибути, които в случая не се запазват в базата
+   - Използваме ги за динамични изчисления на стойностти
+
+4. Custom Model Fields
+   - Ползваме ги когато, Django няма field, които ни върши работа
+   - Имаме методи като:
+     - from_db_value - извиква се, когато искаме да взмем стойността от базата в пайтън
+     - to_python - извиква се когато правим десериализация или clean
+     - get_prep_value - обратното на from_db_value, от Python към базата, предимно ползваме за сериализации
+     - pre_save - използва се за last minute changes, точно преди да запазим резултата в базата
+
+	```py
+	class RGBColorField(models.TextField):
+	    # Convert the database format "R,G,B" to a Python tuple (R, G, B)
+	    def from_db_value(self, value, expression, connection):
+	        if value is None:
+	            return value
+	        return self.to_python(value)
+	
+	    # Convert any Python value to our desired format (tuple)
+	    def to_python(self, value):
+	        if isinstance(value, tuple) and len(value) == 3:
+	            return value
+	        if isinstance(value, str):
+	            return tuple(map(int, value.split(',')))
+	        raise ValidationError("Invalid RGB color format.")
+	
+	    # Prepare the tuple format for database insertion
+	    def get_prep_value(self, value):
+	        # Convert tuple (R, G, B) to "R,G,B" for database storage
+	        return ','.join(map(str, value))
+	```
+
+---
+
