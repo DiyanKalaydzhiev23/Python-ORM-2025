@@ -47,6 +47,10 @@ Get-ChildItem -Path . -Recurse -Force |
 
 ---
 
+- [Advanced Models Techniques](https://forms.gle/gcqt9VcQvbmuaYbCA)
+
+---
+
 
 # Plans
 
@@ -589,6 +593,101 @@ author_posts = author.post_set.all()
 	    def get_prep_value(self, value):
 	        # Convert tuple (R, G, B) to "R,G,B" for database storage
 	        return ','.join(map(str, value))
+	```
+
+---
+
+### Advanced Django Models Techniques
+ 
+
+1. Validation in Models
+   - Built-in Validators
+     - MaxValueValidator, MinValueValidator - приема два аргумета (limit, message)
+     - MaxLengthValidator, MinLengthValidator - приема два аргумета (limit, message)
+     - RegexValidator - приема два аргумета (regex, message)
+	```py
+	class SampleModel(models.Model):
+	    name = models.CharField(
+	        max_length=50,
+	        validators=[MinLengthValidator(5)]  # Name should have a minimum length of 5 characters
+	    )
+	
+	    age = models.IntegerField(
+	        validators=[MaxValueValidator(120)]  # Assuming age shouldn't exceed 120 years
+	    )
+	
+	    phone = models.CharField(
+	        max_length=15,
+	        validators=[
+		    RegexValidator(
+		        regex=r'^\+?1?\d{9,15}$',
+	                message="Phone number must be entered in the format: '+999999999'. Up to 15 digits allowed."
+		)]  # A simple regex for validating phone numbers
+	    )
+	```
+ - Custom Validators - функции, които често пишем в отделен файл. При грешка raise-ваме ValidationError
+
+
+2. Meta Options and Meta Inheritance
+   - В мета класа можем да променяме:
+     - Името на таблицата
+     - Подреждането на данните
+     - Можем да задаваме constraints
+     - Можем да задаваме типа на класа(proxy, abstract)
+	```py
+	class SampleModel(models.Model):
+	    name = models.CharField(max_length=50)
+	    age = models.IntegerField()
+	    email = models.EmailField()
+	
+	    class Meta:
+	        # Database table name
+	        db_table = 'custom_sample_model_table'
+	
+	        # Default ordering (ascending by name)
+	        ordering = ['name'] - Случва се на SELECT, не на INSERT
+	
+	        # Unique constraint (unique combination of name and email)
+	        unique_together = ['name', 'email']
+	```
+    - Meта наследяване:
+      - Ако наследим абстрактен клас и не презапишем мета класа, то наслеяваме мета класа на абстрактния клас
+	```py
+	class BaseModel(models.Model):
+	    name = models.CharField(max_length=100)
+	    
+	    class Meta:
+	        abstract = True
+	        ordering = ['name']
+	
+	class ChildModel(BaseModel):
+	    description = models.TextField()
+	    # ChildModel inherits the Meta options
+	```
+
+3. Indexing
+   - Индексирането ни помага, подреждайки елементите в определен ред или създавайки друга структура, чрез, която да търсим по-бързо.
+   - Бързо взимаме записи, но ги запазваме по-бавно
+   - В Django можем да сложим индекс на поле, като добавим key-word аргумента db_index=True
+   - Можем да направим и индекс, чрез мета класа, като можем да правим и композитен индекс
+	```py
+	class Meta:
+	indexes=[
+	models.Index(fields=["title", "author"]),  # прави търсенето по два критерия, по-бързо
+	models.Index(fields=["publication_date"])
+	]
+	```
+
+
+4. Django Model Mixins
+   - Както знаем, миксините са класове, които използваме, за да отделим обща функционалност
+
+	```py
+	class TimestampMixin(models.Model):
+	    created_at = models.DateTimeField(auto_now_add=True)
+	    updated_at = models.DateTimeField(auto_now=True)
+		class Meta:
+	    	    abstract = True
 	```
 
 ---
