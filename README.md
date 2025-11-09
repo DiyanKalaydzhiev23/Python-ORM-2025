@@ -729,42 +729,50 @@ author_posts = author.post_set.all()
 	average_rating = Book.objects.aggregate(avg_rating=Avg('rating'))
 	```
 
-3. select_related & prefetch_related
-   - select_related - редуцира броя на заявките при One-To-One и Many-To-One заявки
-     - вместо lazily да взимаме свързаните обекти правим JOIN още при първата заявка
-     - Пример:
+3. `select_related` & `prefetch_related`
 
-	```py
-	from django.db import models
-	
-	class Author(models.Model):
-	    name = models.CharField(max_length=100)
-	
-	class Book(models.Model):
-	    title = models.CharField(max_length=100)
-	    author = models.OneToOneField(Author, on_delete=models.CASCADE)
-	
-	books_with_authors = Book.objects.select_related('author') 
-	# SELECT * FROM "myapp_book" JOIN "myapp_author" ON ("myapp_book"."author_id" = "myapp_author"."id")
+Общо
+Използват се за оптимизация на заявки и избягване на N+1 проблема.
 
-	```
-   
-   - prefetch_related - редуцира броя на заявките при Many-To-Many(не само) до броя на релациите + 1
-   - Пример:
+---
 
-	```py
-	class Author(models.Model):
-	    name = models.CharField(max_length=100)
-	
-	class Book(models.Model):
-	    title = models.CharField(max_length=100)
-	    authors = models.ManyToManyField(Author)
-	
-	authors_with_books = Author.objects.prefetch_related('book_set')
-	
-	# 1. SELECT * FROM "myapp_author"
-	# 2. SELECT * FROM "myapp_book" INNER JOIN "myapp_book_authors" ON ("myapp_book"."id" = "myapp_book_authors"."book_id")
-	```
+ `select_related`
+- Работи при **OneToOne** и **ForeignKey (Many-To-One)**.
+- Прави **JOIN** и взима свързаните обекти в една заявка.
+- Използва се при релации, които връщат само един обект.
+- Поддържа няколко и вложени връзки (`'author__country'`).
+
+```py
+books = Book.objects.select_related('author', 'publisher')
+# SELECT ... FROM book
+# LEFT JOIN author ON ...
+# LEFT JOIN publisher ON ...
+```
+
+---
+
+ `prefetch_related`
+- Работи при **ManyToMany** и **reverse ForeignKey (One-To-Many)**.
+- Прави отделни заявки и join-ва в Python.
+- Използва се при релации, които връщат много обекти.
+- Може да се комбинира с `Prefetch` за филтриране или `to_attr`.
+
+```py
+authors = Author.objects.prefetch_related('book_set')
+# 1) SELECT * FROM author;
+# 2) SELECT * FROM book
+#    INNER JOIN book_authors ON ...
+```
+
+---
+
+Комбиниране
+```py
+Book.objects.select_related('author__country', 'publisher') \
+            .prefetch_related('genres', 'reviews')
+```
+
+---
 
 4. Q and F
 
