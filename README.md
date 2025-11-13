@@ -55,6 +55,10 @@ Get-ChildItem -Path . -Recurse -Force |
 
 ---
 
+- [SQL Alchemy](https://forms.gle/NP7SRghks5ra1jGp8)
+
+---
+
 
 # Plans
 
@@ -795,4 +799,158 @@ Book.objects.select_related('author__country', 'publisher') \
 	```
 
 ---
+
+### SQL Alchemy
+
+1. SQL Alchemy - ORM - Object Relational Mapper
+   - ORM - абстракция позволяваща ни да пишем SQL, чрез Python
+   - Core - грижи се за транзакциите, изпращането на заявки, sessions и database pooling
+
+2. SetUp:
+   1. ```pip install sqlalchemy```
+   2. ```pip install psycopg2```
+
+3. Модели
+   - Подобно на Django наследяваме базов клас, `Base`, който взимаме като резултат от извикването на `declarative_base()`
+
+	```py
+ 
+	from sqlalchemy.ext.declarative import declarative_base
+	
+	Base = declarative_base()
+	
+	class User(Base):
+	    __tablename__ = 'users'
+	    id = Column(Integer, primary_key=True)
+	    name = Column(String)
+	```
+
+4. Миграции
+   
+   4.1 SetUp:
+   	- Не са включени в SQLAlchemy, за тях можем да използваме `Alembic`
+   	  
+	- ```pip install alembic```
+	
+ 	- ```alembic init alembic``` - създава ни файловата структура за миграциите<\br>
+       
+	- ```sqlalchemy.url = postgresql+psycopg2://username:password@localhost/db_name``` - във файла alembic.ini
+	
+ 	- ```py target_metadata = Base.metadata``` - във файла env.py, за да можем да поддържаме autogenerate
+   
+   4.2 Команди:
+   	- ```alembic revision --autogenerate -m "Add User Table"``` - създава миграция със съобщени, както `makemigrations`
+       
+	- ```alembic upgrade head``` - прилага миграциите, както `migrate`
+       
+	- ```alembic downgrade -1``` - връща миграция
+
+6. CRUD
+   - Отваряме връзка с базата, пускайки нова сесия
+   - Винаги затваряме сесията, след приключване на работа
+   - Трябва да комитнем резултата, подобно на Django, където ползвахме `save()`
+
+	```py
+	from sqlalchemy import create_engine
+	from sqlalchemy.orm import sessionmaker
+	
+	engine = create_engine('sqlite:///example.db')
+	Session = sessionmaker(bind=engine)
+	session = Session()
+	
+	with Session() as session: # a good practice
+	...
+	```
+   
+   5.1 Add:
+      ```py 
+         new_user = User(username='john_doe', email='john@example.com') 
+         session.add(new_user)
+      ```
+
+   5.2 Query
+      ```py
+   	users = session.query(User).all()
+      ```
+
+
+   5.3 Update
+      ```py 
+      
+	with engine.connect() as connection:
+	    # Create an update object
+	    upd = update(User).where(User.name == 'John').values(nickname='new_nickname')
+	
+	    # Execute the update
+	    connection.execute(upd)
+      ```
+
+	or
+
+      ```py
+	session.query(User).filter(User.name == 'John').update({"nickname": "new_nickname"}, synchronize_session=False)	
+	session.commit()
+      ```
+
+   5.4 Delete
+       ```py
+    	del_stmt = delete(User).where(User.name == 'John')
+       ```
+
+ 
+8. Transactions
+	- `session.begin()`
+  
+	- `session.commit()`
+
+ 	- `session.rollback()`
+
+
+9. Relationships
+   1. Many to One
+      ```py
+         user_id = Column(Integer, ForeignKey('users.id'))
+         user = relationship('User')
+      ```
+   2. One to One
+     - `uselist=false`
+	```py
+	class User(Base):
+	    __tablename__ = 'users'
+	    id = Column(Integer, primary_key=True)
+	    profile = relationship("UserProfile", back_populates="user", uselist=False)
+	
+	class UserProfile(Base):
+	    __tablename__ = 'profiles'
+	    id = Column(Integer, primary_key=True)
+	    user_id = Column(Integer, ForeignKey('users.id'))
+	    user = relationship("User", back_populates="profile")  
+	```
+
+   3. Many to many
+     ```py
+
+	user_group_association = Table('user_group', Base.metadata,
+	    Column('user_id', Integer, ForeignKey('users.id')),
+	    Column('group_id', Integer, ForeignKey('groups.id'))
+	)
+	
+	class Group(Base):
+	    __tablename__ = 'groups'
+	    id = Column(Integer, primary_key=True)
+	    users = relationship("User", secondary=user_group_association, back_populates="groups")
+	
+	class User(Base):
+	    __tablename__ = 'users'
+	    id = Column(Integer, primary_key=True)
+	    groups = relationship("Group", secondary=user_group_association, back_populates="users")
+
+    ```
+
+
+10. Database pooling
+```py engine = create_engine(DATABASE_URL, pool_size=10, max_overflow=20)``` - задава първоначални връзки и максимално създадени
+
+----
+
 
